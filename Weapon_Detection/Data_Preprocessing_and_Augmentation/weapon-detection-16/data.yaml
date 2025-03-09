@@ -1,0 +1,14 @@
+names:
+- gun
+- heavy-weapon
+- knife
+nc: 3
+roboflow:
+  license: CC BY 4.0
+  project: weapon-detection-m7qso
+  url: https://universe.roboflow.com/yolov7test-u13vc/weapon-detection-m7qso/dataset/16
+  version: 16
+  workspace: yolov7test-u13vc
+test: ../test/images
+train: ../train/images
+val: ../valid/images
