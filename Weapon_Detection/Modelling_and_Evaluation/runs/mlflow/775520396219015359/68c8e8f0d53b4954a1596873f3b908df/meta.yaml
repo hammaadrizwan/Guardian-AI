@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/arkha/OneDrive/Desktop/EdgeAI/Weapon_Detection/Modelling_and_Evaluation/runs/mlflow/775520396219015359/68c8e8f0d53b4954a1596873f3b908df/artifacts
+end_time: 1741643785723
+entry_point_name: ''
+experiment_id: '775520396219015359'
+lifecycle_stage: active
+run_id: 68c8e8f0d53b4954a1596873f3b908df
+run_name: train
+run_uuid: 68c8e8f0d53b4954a1596873f3b908df
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741634945031
+status: 3
+tags: []
+user_id: arkha
