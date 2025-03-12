@@ -1,6 +1,6 @@
 # EdgeAI
 
-Using python 3-13.2
+Using python 3.11.2
 
 Images taken from:
 - Different types of bags : https://universe.roboflow.com/testworking/shopping-3p7xz/dataset/3
