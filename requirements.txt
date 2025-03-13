@@ -1,0 +1,13 @@
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+opencv-python
+roboflow
+ultralytics
+requests
+mlflow
+scipy
+tf-keras
+tqdm
