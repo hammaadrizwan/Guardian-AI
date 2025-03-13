@@ -1,0 +1,15 @@
+names:
+- backpack
+- handbag
+- person
+- suitcase
+nc: 4
+roboflow:
+  license: CC BY 4.0
+  project: test_ds
+  url: https://universe.roboflow.com/romain-dreuilhet/test_ds/dataset/1
+  version: 1
+  workspace: romain-dreuilhet
+test: D:\AI & DS\Industrial Placement Year\CM3603 Edge Artificial Intelligence\CW\EdgeAI\test_ds-1/test/images
+train: D:\AI & DS\Industrial Placement Year\CM3603 Edge Artificial Intelligence\CW\EdgeAI\test_ds-1/train/images
+val: D:\AI & DS\Industrial Placement Year\CM3603 Edge Artificial Intelligence\CW\EdgeAI\test_ds-1/valid/images
