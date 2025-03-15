@@ -1,8 +1,7 @@
 names:
 - gun
 - heavy-weapon
-- knife
-nc: 3
+nc: 2
 roboflow:
   license: CC BY 4.0
   project: weapon-detection-m7qso
