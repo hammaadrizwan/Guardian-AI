@@ -1,0 +1,14 @@
+names:
+- Bag
+- Handle
+- Straps
+nc: 3
+roboflow:
+  license: CC BY 4.0
+  project: 1-baghandle
+  url: https://universe.roboflow.com/project1bag-and-handle-detection/1-baghandle/dataset/9
+  version: 9
+  workspace: project1bag-and-handle-detection
+test: ../test/images
+train: ../train/images
+val: ../valid/images
