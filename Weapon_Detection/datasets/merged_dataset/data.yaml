@@ -1,0 +1,22 @@
+names:
+  - gun
+  - heavy-weapon
+  - backpack
+  - handbag
+  - paper bag
+
+nc: 5
+roboflow:
+  license: Merged (Private & CC BY 4.0)
+  projects:
+    - name: shopping-3p7xz
+      url: https://app.roboflow.com/testworking/shopping-3p7xz/3
+      version: 3
+      workspace: testworking
+    - name: weapon-detection-m7qso
+      url: https://universe.roboflow.com/yolov7test-u13vc/weapon-detection-m7qso/dataset/16
+      version: 16
+      workspace: yolov7test-u13vc
+train: ../train/images
+val: ../valid/images
+test: ../test/images

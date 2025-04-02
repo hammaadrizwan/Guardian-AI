@@ -1,0 +1,14 @@
+names:
+- backpack
+- handbag
+- paper bag
+nc: 3
+roboflow:
+  license: Private
+  project: shopping-3p7xz
+  url: https://app.roboflow.com/testworking/shopping-3p7xz/3
+  version: 3
+  workspace: testworking
+test: ../test/images
+train: ../train/images
+val: ../valid/images
