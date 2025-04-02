@@ -39,10 +39,9 @@ function Login() {
         <>
         <Navbar />
         <section className="login">
-            <div className='xl:pt-28 xl:pb-32 login-items'>
-                <div className='hidden lg:flex login-left'>
-                    <img className='login-image' src={image} alt='' />
-                </div>
+            <div className='login-items'>  
+                
+                <img className='login-image' src={image} alt='' />
                 <div className='login-right'>
                     <form className='xl:mr-10 lg:mr-10 login-right-info'>
                         <div className='login-right-info-title'>
