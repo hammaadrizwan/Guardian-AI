@@ -1,2 +1,0 @@
-Military personnal dataset
->>curl -L "https://universe.roboflow.com/ds/W0hubnCpTs?key=cyhjze4AV1" > roboflow.zip; unzip roboflow.zip; rm roboflow.zip
