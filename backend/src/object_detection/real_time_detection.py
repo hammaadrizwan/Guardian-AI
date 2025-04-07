@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 
 # Allowed labels to draw
-ALLOWED_LABELS = {'person', 'gun', 'heavy-gun', 'suitcase', 'handbag'}
+ALLOWED_LABELS = {'person', 'gun', 'heavy-gun', 'suitcase', 'handbag','bag'}
 
 def is_bag_unattended(bag, people_locations, min_distance=150):
     bag_x, bag_y, bag_w, bag_h = bag
@@ -20,7 +20,7 @@ def is_bag_unattended(bag, people_locations, min_distance=150):
 
     return min_dist, nearest_person
 
-def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh, recorder=None):
+def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh, recorder=None,no_display=False):
     bbox_colors1 = (0, 255, 0)  # Green
     bbox_colors2 = (0, 0, 255)  # Red
     frame_rate_buffer = []
@@ -86,7 +86,7 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
                 center_y = ymin + (ymax - ymin) // 2
                 if label == 'person':
                     people_locations.append((center_x, center_y))
-                elif label in ['suitcase', 'handbag']:
+                elif label in ['suitcase', 'handbag','bag']:
                     bags_locations.append((xmin, ymin, xmax - xmin, ymax - ymin))
         # Check unattended bags
         for bag in bags_locations:
@@ -116,10 +116,15 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
         cv2.putText(frame_resized, f'Objects: {object_count}', (10, 40),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
-
-        cv2.imshow('Dual YOLO Detection', frame_resized)
         if recorder:
             recorder.write(frame_resized)
 
-        if cv2.waitKey(5) & 0xFF == ord('q'):
-            break
+        if not no_display:
+            cv2.imshow('Dual YOLO Detection', frame_resized)
+            if cv2.waitKey(5) & 0xFF == ord('q'):
+                break
+
+
+        # cv2.imshow('Dual YOLO Detection', frame_resized)
+        # if cv2.waitKey(5) & 0xFF == ord('q'):
+            # break
