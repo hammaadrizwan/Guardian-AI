@@ -301,9 +301,9 @@ align-self: stretch;
 
 .VALUE-PROP .text-wrapper {
   color: #ffffff;
-  font-family: "CocoSharp Trial-Extrabold", Helvetica;
+  font-family: "CocoSharp Trial", Helvetica;
   font-size: 45px;
-  font-weight: 400;
+  font-weight: bold;
   letter-spacing: -1.00px;
   line-height: 58.5px;
   margin-left: -16.00px;
@@ -650,9 +650,10 @@ word-wrap: break-word;
 
 .VALUE-PROP .text-wrapper-6 {
   color: #ffffff;
-  font-family: "CocoSharp Trial-Extrabold", Helvetica;
+  /* font-family: "CocoSharp Trial-Extrabold", Helvetica; */
+  font-family: 'Poppins';
   font-size: 25px;
-  font-weight: 400;
+  font-weight: bold;
   height: 44px;
   letter-spacing: 0;
   line-height: normal;
@@ -810,10 +811,10 @@ word-wrap: break-word;
   top: 37px;
 }
 
-.VALUE-PROP .product-name {
+.VALUE-PROP .table-heading {
   color: #000000;
-  font-family: "CocoSharp Trial-Bold", Helvetica;
-  font-size: 29px;
+  font-family: "CocoSharp Trial", Helvetica;
+  font-size: 27px;
   font-weight: 700;
   left: 0;
   letter-spacing: 0;

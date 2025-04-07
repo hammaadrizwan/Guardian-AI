@@ -102,7 +102,7 @@ function Dashboard() {
                     </div>
                 </div>
 
-                <div className='content-wrapper'>
+                <div className='component-wrapper'>
                     <div className='component-6'>
                         <div className='overlap-group-2'>
                             <div className='rectangle' />
