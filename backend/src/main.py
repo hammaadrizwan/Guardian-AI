@@ -1,4 +1,4 @@
-from object_detection.military_person_detection import is_military_person
+
 import argparse
 import cv2
 from object_detection.models import get_models
@@ -23,7 +23,7 @@ if args.webcam:
     source_type = 'webcam'
     print('📷 Using webcam...')
 else:
-    video_path = '../../demonstration_data/videos/Unattended_Bag.mp4'
+    video_path = '../../demonstration_data/videos/Shooting.mp4'
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
         print('❌ Invalid video path.')

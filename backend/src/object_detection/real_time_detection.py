@@ -1,7 +1,9 @@
 import time
 import cv2
+import os
 import numpy as np
-
+from logger.log import upload_to_s3
+from object_detection.military_person_detection import is_military_person
 # Allowed labels to draw
 ALLOWED_LABELS = {'person', 'gun', 'heavy-gun', 'suitcase', 'handbag','bag'}
 
@@ -66,7 +68,23 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
                 if label in ['gun', 'heavy-gun'] and conf >= 0.56:
                     cv2.putText(frame_resized, f'{label}: {int(conf * 100)}%', (xmin, ymin - 10),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-                    print("Weapon detected")
+                    
+                    #save the frame
+                    cv2.imwrite('detected_frame.jpg', frame_resized)
+                    IMG_SIZE = 32  
+
+                    MODEL_PATH = "/Users/hammaad/EdgeAI-1/backend/models/military_person_identification/military_classifier_50_epoch.keras"
+
+                    result = is_military_person('detected_frame.jpg', MODEL_PATH, IMG_SIZE)
+                    if result:
+                        print("The image contains a military person.")
+                    else:
+                        upload_to_s3('detected_frame.jpg')
+                        print("Image Uploaded")
+                    #delete the image after uploading
+                    os.remove('detected_frame.jpg')
+
+
         # Process model2 detections
         for det in detections2:
             xyxy = det.xyxy.cpu().numpy().squeeze().astype(int)
@@ -100,6 +118,15 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
                 if time.time() - unattended_bag_time[bag] > 5:
                     cv2.putText(frame_resized, 'Unattended', (bag_center[0], bag_center[1] - 10),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
+                    
+                    cv2.imwrite('detected_frame.jpg', frame_resized)
+
+                    upload_to_s3('detected_frame.jpg')
+                    print("Image Uploaded")
+
+                    os.remove('detected_frame.jpg')
+
+                    
             else:
                 if bag in unattended_bag_time:
                     del unattended_bag_time[bag]  # Reset if the bag is no longer unattended
