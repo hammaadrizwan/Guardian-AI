@@ -619,13 +619,13 @@ word-wrap: break-word;
 
 .VALUE-PROP .GRID-2 {
   align-items: flex-start;
-  align-self: stretch;
   display: flex;
-  gap: 14px;
+  gap: 22px;
   height: 513px;
-  overflow: hidden;
+  margin-left: -0.50px;
+  margin-right: -0.50px;
   position: relative;
-  width: 100%;
+  width: 959px;
 }
 
 .VALUE-PROP .group {

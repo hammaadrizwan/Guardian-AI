@@ -11,9 +11,9 @@ function App() {
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route exact path="/" element={<Dashboard />} />
+                    <Route exact path="/" element={<Login />} />
                 </Routes>
-                {/* <Footer /> */}
+                <Footer />
             </BrowserRouter>
         </>
     );
