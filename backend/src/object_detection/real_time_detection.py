@@ -39,6 +39,7 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
             break
 
         frame_resized = cv2.resize(frame, (resW, resH))
+        clean_frame = frame_resized.copy()
         results1 = model1(frame_resized, verbose=False)
         results2 = model2(frame_resized, verbose=False)
 
@@ -70,7 +71,7 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
                     
                     #save the frame
-                    cv2.imwrite('detected_frame.jpg', frame_resized)
+                    cv2.imwrite('detected_frame.jpg', clean_frame)
                     IMG_SIZE = 32  
 
                     MODEL_PATH = "/Users/hammaad/EdgeAI-1/backend/models/military_person_identification/military_classifier_50_epoch.keras"
@@ -81,7 +82,6 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
                     else:
                         upload_to_s3('detected_frame.jpg')
                         print("Image Uploaded")
-                    #delete the image after uploading
                     os.remove('detected_frame.jpg')
 
 
@@ -119,7 +119,7 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
                     cv2.putText(frame_resized, 'Unattended', (bag_center[0], bag_center[1] - 10),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
                     
-                    cv2.imwrite('detected_frame.jpg', frame_resized)
+                    cv2.imwrite('detected_frame.jpg', clean_frame)
 
                     upload_to_s3('detected_frame.jpg')
                     print("Image Uploaded")
