@@ -1,18 +1,22 @@
 import boto3
 from datetime import datetime
+import cv2
+import os
 
+# AWS S3 configuration (use AWS CLI config or replace with your credentials)
 AWS_ACCESS_KEY_ID = 'AKIAXHB7CVFK7XWERS2V'  # Replace if not using AWS CLI
 AWS_SECRET_ACCESS_KEY = '+z8L3z+zbDq5DFj5uTr8nRtehyuagKLMe5md8f2w'  # Replace if not using AWS CLI
 S3_BUCKET_NAME = 'security-detection-images'
-
+AWS_REGION = 'ap-south-1'  # Optional: specify your region
 # Initialize S3 client
 s3_client = boto3.client(
     's3',
     aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    region_name='ap-south-1'  # Optional: specify your region
 )
 
-def upload_to_s3(image, bucket_name=S3_BUCKET_NAME, folder='images'):
+def upload_image_to_s3(image, bucket_name=S3_BUCKET_NAME, folder='images'):
     """
     Upload an image to S3 with filename as current timestamp (dd_mm_yyyy_hh_mm_ss.jpg)
     inside the specified folder prefix.
@@ -31,7 +35,53 @@ def upload_to_s3(image, bucket_name=S3_BUCKET_NAME, folder='images'):
 
         s3_client.upload_file(image, bucket_name, s3_key)
         print(f"Uploaded {s3_key} to S3 bucket {bucket_name}")
-        
+        return f"https://{bucket_name}.s3.amazonaws.com/{s3_key}"
 
     except Exception as e:
         print(f"Error uploading to S3: {e}")
+import csv
+def append_csv_to_s3(date, time_str, image_link, location, bucket_name=S3_BUCKET_NAME, csv_filename='detection_logs.csv'):
+    """
+    Append a log entry to a CSV file and upload it to S3 at the root level.
+    
+    Args:
+        date: str, date in 'dd_mm_yyyy' format
+        time_str: str, time in 'hh_mm_ss' format
+        image_link: str, S3 URL of the image
+        location: str, location of detection
+        bucket_name: str, S3 bucket name
+        csv_filename: str, name of the CSV file (e.g., 'detection_logs.csv')
+    
+    Returns:
+        str: Full S3 URL of the updated CSV file
+    """
+    try:
+        temp_csv = f'/tmp/{csv_filename}'
+        s3_key = csv_filename  # Stored at root level, no folder prefix
+
+        # Download existing CSV from S3 if it exists
+        try:
+            s3_client.download_file(bucket_name, s3_key, temp_csv)
+            existing_data = True
+        except s3_client.exceptions.NoSuchKey:
+            existing_data = False
+
+        # Append to the CSV
+        with open(temp_csv, 'a' if existing_data else 'w', newline='') as f:
+            writer = csv.writer(f)
+            if not existing_data:
+                writer.writerow(['date', 'time', 'image_link', 'location'])
+            writer.writerow([date, time_str, image_link, location])
+
+        # Upload the updated CSV to S3
+        s3_client.upload_file(temp_csv, bucket_name, s3_key)
+        print(f"Appended to {s3_key} in S3 bucket {bucket_name}")
+
+        # Clean up
+        os.remove(temp_csv)
+
+        s3_url = f'https://{bucket_name}.s3.{AWS_REGION}.amazonaws.com/{s3_key}'
+        return s3_url
+    except Exception as e:
+        print(f"Error appending to S3 CSV: {e}")
+        return None

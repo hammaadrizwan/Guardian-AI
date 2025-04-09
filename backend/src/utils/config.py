@@ -1,0 +1,1 @@
+RECIPIENT_LIST = ["user@example.com"]
