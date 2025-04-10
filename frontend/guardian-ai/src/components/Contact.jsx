@@ -1,26 +1,26 @@
 import React, { useRef } from "react";
 // import emailjs from '@emailjs/browser';
 import Navbar from "./Navbar";
-const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+// const userDetails = JSON.parse(localStorage.getItem('userDetails'));
 import Footer from "./Footer";
 
 function Contact() {
-    const form = useRef();
+    // const form = useRef();
 
-    const sendEmail = (e) => {
-        e.preventDefault();
+    // const sendEmail = (e) => {
+    //     e.preventDefault();
     
-        emailjs
-          .sendForm('service_ju696k4', 'template_eqxraq7', form.current, '5HZUZQiNHYtX31zFR')
-          .then(
-            () => {
-              console.log('SUCCESS!');
-            },
-            (error) => {
-              console.log('FAILED...', error.text);
-            }
-          );
-    }
+    //     emailjs
+    //       .sendForm('service_ju696k4', 'template_eqxraq7', form.current, '5HZUZQiNHYtX31zFR')
+    //       .then(
+    //         () => {
+    //           console.log('SUCCESS!');
+    //         },
+    //         (error) => {
+    //           console.log('FAILED...', error.text);
+    //         }
+    //       );
+    // }
 
     return (
         <div>

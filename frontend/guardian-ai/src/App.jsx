@@ -4,9 +4,9 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { Routes, Route, BrowserRouter} from 'react-router-dom';
 import Index from './components/Index';
-// import Login from './components/Login';
-// import Contact from './components/Contact';
-// import Dashboard from './components/Dashboard';
+import Login from './components/Login';
+import Contact from './components/Contact';
+import Dashboard from './components/Dashboard';
 
 function App() {
   
@@ -15,6 +15,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Index />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
         <Footer />
       </BrowserRouter>

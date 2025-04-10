@@ -2,13 +2,16 @@ import React from 'react'
 
 function Hero() {
   return (
-    <div className='index-hero-items'>
-        <div className='index-hero-title'>
-            <h1>Unlock tomorrow's </h1><h1>success today</h1>
+    <div className="HERO">
+      <div className="TEXT">
+        <div className="frame">
+          <p className="text-wrapper">Scan it. Spot it. Stop it.</p>
+
+          <p className="div">Using ML at the Edge</p>
         </div>
-        <p className='index-hero-subtitle'>Predict sales with precision</p>
-        <a  href="/contact" className='index-hero-learnmore-button font-semibold hover:bg-white hover:text-black'>Learn more</a>
+      </div>
     </div>
+
   )
 }
 export default Hero
