@@ -11,6 +11,10 @@ import re
 ALLOWED_LABELS = {'person', 'gun', 'heavy-gun', 'suitcase', 'handbag','bag'}
 
 def is_bag_unattended(bag, people_locations, min_distance=150):
+    """
+    Check if a bag is unattended by calculating the distance to the nearest person.
+    If the distance is greater than min_distance, the bag is considered unattended.
+    """
     bag_x, bag_y, bag_w, bag_h = bag
     bag_center = (bag_x + bag_w // 2, bag_y + bag_h // 2)
 
@@ -26,13 +30,15 @@ def is_bag_unattended(bag, people_locations, min_distance=150):
     return min_dist, nearest_person
 
 def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,camera, recorder=None,no_display=False):
-    bbox_colors1 = (0, 255, 0)  # Green
-    bbox_colors2 = (0, 0, 255)  # Red
+    """
+    Run real-time detection using two YOLO models.
+    """
+    bbox_colors1 = (0, 255, 0)  
+    bbox_colors2 = (0, 0, 255)  
     frame_rate_buffer = []
     fps_avg_len = 100
 
-    unattended_bag_time = {}  # Dictionary to track time when a bag was unattended
-    weapon_time = False  # Track if weapon is detected for 4 seconds
+    unattended_bag_time = {} 
 
     while True:
         t_start = time.perf_counter()
@@ -53,7 +59,7 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
         people_locations = []
         bags_locations = []
 
-        # Process model1 detections
+        # Weapon model detection
         for det in detections1:
             xyxy = det.xyxy.cpu().numpy().squeeze().astype(int)
             conf = det.conf.item()
@@ -77,31 +83,28 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
                     cv2.imwrite('detected_frame.jpg', clean_frame)
                     IMG_SIZE = 32  
 
-                    MODEL_PATH = "/Users/hammaad/EdgeAI-1/backend/models/military_person_identification/military_classifier_50_epoch.keras"
+                    MODEL_PATH = "../models/military_person_identification/military_classifier_50_epoch.keras"
 
                     result = is_military_person('detected_frame.jpg', MODEL_PATH, IMG_SIZE)
                     if result:
                         print("The image contains a military person.")
                     else:
                         image_link = upload_image_to_s3('detected_frame.jpg', bucket_name='security-detection-images', folder='images')
-                        # address = camera["info"]["address"]
+
                         timestamp = re.search(r"/(\d{2})_(\d{2})_(\d{4})_(\d{2})_(\d{2})_(\d{2})\.jpg$", image_link)
                         day, month, year, hour, minute, second = timestamp.groups()
                         date = f"{day}-{month}-{year}"
                         time_str= f"{hour}:{minute}:{second}"
 
-                        # send_notification(date,image_link,address)
                         if image_link:
                             location = camera["info"]["location"]
                             address = camera["info"]["address"]
-                            # Append to CSV in S3 (root level)
                             append_csv_to_s3(date, time_str, image_link, location, bucket_name='security-detection-images')
-                            # Send notification
                             send_notification(date, image_link, address)
                     os.remove('detected_frame.jpg')
 
 
-        # Process model2 detections
+        # Yolo 11n model detection
         for det in detections2:
             xyxy = det.xyxy.cpu().numpy().squeeze().astype(int)
             conf = det.conf.item()
@@ -122,6 +125,7 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
                     people_locations.append((center_x, center_y))
                 elif label in ['suitcase', 'handbag','bag']:
                     bags_locations.append((xmin, ymin, xmax - xmin, ymax - ymin))
+        
         # Check unattended bags
         for bag in bags_locations:
             dist, nearest_person = is_bag_unattended(bag, people_locations)
@@ -130,7 +134,7 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
             if dist > 150:
                 if bag not in unattended_bag_time:
                     unattended_bag_time[bag] = time.time()
-                # If the bag has been unattended for more than 5 seconds
+
                 if time.time() - unattended_bag_time[bag] > 5:
                     cv2.putText(frame_resized, 'Unattended', (bag_center[0], bag_center[1] - 10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
@@ -148,9 +152,8 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
                     if image_link:
                         location = camera["info"]["location"]
                         address = camera["info"]["address"]
-                        # Append to CSV in S3 (root level)
+                        
                         append_csv_to_s3(date, time_str, image_link, location, bucket_name='security-detection-images')
-                        # Send notification
                         send_notification(date, image_link, address)
 
                     os.remove('detected_frame_2.jpg')
@@ -158,9 +161,9 @@ def run_detection(cap, model1, model2, labels1, labels2, resW, resH, min_thresh,
                     
             else:
                 if bag in unattended_bag_time:
-                    del unattended_bag_time[bag]  # Reset if the bag is no longer unattended
+                    del unattended_bag_time[bag] 
 
-        # Show FPS
+
         t_stop = time.perf_counter()
         fps = 1 / (t_stop - t_start)
         frame_rate_buffer.append(fps)

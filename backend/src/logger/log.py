@@ -1,19 +1,18 @@
 import boto3
 from datetime import datetime
-import cv2
 import os
+import csv
 
-# AWS S3 configuration (use AWS CLI config or replace with your credentials)
-AWS_ACCESS_KEY_ID = 'AKIAXHB7CVFK7XWERS2V'  # Replace if not using AWS CLI
-AWS_SECRET_ACCESS_KEY = '+z8L3z+zbDq5DFj5uTr8nRtehyuagKLMe5md8f2w'  # Replace if not using AWS CLI
+AWS_ACCESS_KEY_ID = 'AKIAXHB7CVFK7XWERS2V' 
+AWS_SECRET_ACCESS_KEY = '+z8L3z+zbDq5DFj5uTr8nRtehyuagKLMe5md8f2w' 
 S3_BUCKET_NAME = 'security-detection-images'
-AWS_REGION = 'ap-south-1'  # Optional: specify your region
-# Initialize S3 client
+AWS_REGION = 'ap-south-1'  
+
 s3_client = boto3.client(
     's3',
     aws_access_key_id=AWS_ACCESS_KEY_ID,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-    region_name='ap-south-1'  # Optional: specify your region
+    region_name='ap-south-1'
 )
 
 def upload_image_to_s3(image, bucket_name=S3_BUCKET_NAME, folder='images'):
@@ -27,7 +26,6 @@ def upload_image_to_s3(image, bucket_name=S3_BUCKET_NAME, folder='images'):
         folder: str, folder prefix in S3 (e.g., 'images')
     """
     try:
-        # Generate filename with current timestamp
         timestamp = datetime.now().strftime('%d_%m_%Y_%H_%M_%S')
         filename = f'{timestamp}.jpg'
         
@@ -39,7 +37,7 @@ def upload_image_to_s3(image, bucket_name=S3_BUCKET_NAME, folder='images'):
 
     except Exception as e:
         print(f"Error uploading to S3: {e}")
-import csv
+
 def append_csv_to_s3(date, time_str, image_link, location, bucket_name=S3_BUCKET_NAME, csv_filename='detection_logs.csv'):
     """
     Append a log entry to a CSV file and upload it to S3 at the root level.
@@ -57,9 +55,8 @@ def append_csv_to_s3(date, time_str, image_link, location, bucket_name=S3_BUCKET
     """
     try:
         temp_csv = f'/tmp/{csv_filename}'
-        s3_key = csv_filename  # Stored at root level, no folder prefix
+        s3_key = csv_filename
 
-        # Download existing CSV from S3 if it exists
         try:
             s3_client.download_file(bucket_name, s3_key, temp_csv)
             existing_data = True
@@ -73,11 +70,9 @@ def append_csv_to_s3(date, time_str, image_link, location, bucket_name=S3_BUCKET
                 writer.writerow(['date', 'time', 'image_link', 'location'])
             writer.writerow([date, time_str, image_link, location])
 
-        # Upload the updated CSV to S3
         s3_client.upload_file(temp_csv, bucket_name, s3_key)
         print(f"Appended to {s3_key} in S3 bucket {bucket_name}")
 
-        # Clean up
         os.remove(temp_csv)
 
         s3_url = f'https://{bucket_name}.s3.{AWS_REGION}.amazonaws.com/{s3_key}'

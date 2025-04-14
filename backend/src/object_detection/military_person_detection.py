@@ -7,6 +7,11 @@ import os
 
 
 def load_model(model_path):
+    """
+    Load a pre-trained TensorFlow model from the specified path.
+    :param model_path: Path to the model file
+    :return: Loaded TensorFlow model
+    """
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model file not found at {model_path}")
     model = tf.keras.models.load_model(model_path)

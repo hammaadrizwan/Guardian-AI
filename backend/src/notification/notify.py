@@ -1,4 +1,3 @@
-import boto3
 from utils.config import RECIPIENT_LIST
 # # AWS SNS configuration (credentials should be configured via AWS CLI or environment variables)
 # AWS_ACCESS_KEY_ID = 'AKIAXHB7CVFK7XWERS2V'  # Replace if not using AWS CLI
@@ -47,6 +46,13 @@ import smtplib
 
 
 def send_notification(date, image_link, address):
+    """
+    Send an email notification with the captured image and details.
+    Args:
+        date (str): The date of the capture.
+        image_link (str): The link to the captured image.
+        address (str): The address of the camera.
+    """
     html_content = f"""
     <html>
     <body style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -60,13 +66,13 @@ def send_notification(date, image_link, address):
     </html>
     """
 
-    recipients = RECIPIENT_LIST  # Make sure RECIPIENT_LIST is defined elsewhere
+    recipients = RECIPIENT_LIST  
     msg = MIMEText(html_content, 'html')
     msg["Subject"] = "🚨 URGENT: THREAT DETECTED – IMMEDIATE ACTION REQUIRED"
     msg["To"] = ", ".join(recipients)
     msg["From"] = "agent.guardianai@gmail.com"
 
     smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-    smtp_server.login("agent.guardianai@gmail.com", "bjwa imaq leds bktt")  # Consider using environment vars for security
+    smtp_server.login("agent.guardianai@gmail.com", "bjwa imaq leds bktt") 
     smtp_server.sendmail(msg["From"], recipients, msg.as_string())
     smtp_server.quit()

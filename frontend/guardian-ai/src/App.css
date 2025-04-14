@@ -138,6 +138,11 @@ body {
   font-weight: 400;
   line-height: normal;
 }
+.login-page-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 /* LOGIN STYLE*/
 .login{
@@ -365,11 +370,11 @@ position: absolute;
 .latest-incident-val{
 width: 123px; 
 height: 69px; 
-left: 200px; 
+left: 170px; 
 top: 12px; 
 position: absolute; 
 color: black; 
-font-size: 50px; 
+font-size: 55px; 
 font-family: Product Sans; 
 font-weight: 700; 
 text-transform: capitalize; 
@@ -380,13 +385,14 @@ text-transform: capitalize;
 width: 253.77px; 
 height: 36.18px; 
 left: 4.94px; 
-top: 11.43px; 
+top: 10.43px; 
 position: absolute;
 color: #181818;
 font-size: 25px;
 font-weight: 700;
 word-wrap: break-word;
 }
+
 
 .VALUE-PROP .frame-2 {
   align-items: flex-start;
@@ -433,11 +439,13 @@ word-wrap: break-word;
   display: flex;
   flex-direction: column;
   gap: 29px;
-  height: 243px;
-  padding: 15px 35px 21px 11px;
+  height: 260px; /* slightly increased from 243px */
+  padding: 35px 35px 21px 11px; /* increased top padding to allow modebar space */
   position: relative;
   width: 100%;
+  overflow: visible; /* allow modebar to spill out if needed */
 }
+
 
 .VALUE-PROP .image {
   height: 228px;
@@ -520,7 +528,7 @@ word-wrap: break-word;
   width: 411px;
 }
 
-.VALUE-PROP .first-location {
+.VALUE-PROP .location-1 {
   color: #181818;
   font-size: 25px;
   font-weight: 700;
@@ -552,7 +560,7 @@ word-wrap: break-word;
   width: 413px;
 }
 
-.VALUE-PROP .second-location {
+.VALUE-PROP .location-2 {
   color: #181818;
   font-size: 25px;
   font-weight: 700;
@@ -587,7 +595,7 @@ word-wrap: break-word;
   width: 414px;
 }
 
-.VALUE-PROP .third-location {
+.VALUE-PROP .location-3 {
   color: #181818;
   font-size: 25px;
   font-weight: 700;
@@ -595,7 +603,7 @@ word-wrap: break-word;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
-  top: 19px;
+  top: 13px;
   width: 245px;
 }
 
@@ -615,7 +623,7 @@ word-wrap: break-word;
 .VALUE-PROP .GRID-2 {
   align-items: flex-start;
   display: flex;
-  gap: 22px;
+  gap: 70px;
   height: 513px;
   margin-left: -0.50px;
   margin-right: -0.50px;
@@ -707,9 +715,12 @@ word-wrap: break-word;
   justify-content: center;
   margin-bottom: -26.00px;
   position: relative;
-  width: 377px;
+  margin-left: -20.00px;
+  width: 340px;
 }
-
+#record_logs{
+  text-align: left;
+}
 .VALUE-PROP .component-6 {
   align-self: stretch;
   height: 443px;
@@ -772,49 +783,97 @@ word-wrap: break-word;
   width: 143px;
 }
 
-.VALUE-PROP .element {
+.component-wrapper {
+  margin: 5px;
+  padding: 0px;
+}
+
+.component-6 {
+  background-color: #333333; /* Dark background */
+  border-radius: 40px;
+  padding: 10px;
+  padding-top: 20px;
+  height: 400px; /* Fixed height for component-6 */
+  display: flex;
+  flex-direction: column;
+}
+/* This container wraps the table and makes it scrollable */
+.table-container {
+  flex-grow: 1; /* Makes the table container take the available space */
+  overflow-y: auto; /* Enables vertical scrolling if the content overflows */
+  max-height: 400px; /* Sets a max height for the table to allow scrolling */
+}
+
+/* Hiding the scrollbar but keeping the scroll functionality */
+.table-container::-webkit-scrollbar {
+  width: 0px; /* Hides the scrollbar */
+  height: 0px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: transparent; /* Hides the track */
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: transparent; /* Hides the thumb */
+}
+.table-heading {
   color: #ffffff;
   font-family: "Product Sans-Bold", Helvetica;
-  font-size: 29px;
+  font-size: 25px;
   font-weight: 700;
-  left: 282px;
   letter-spacing: 0;
   line-height: normal;
-  position: absolute;
   text-align: center;
-  top: 297px;
-  white-space: nowrap;
-  width: 20px;
+  margin-bottom: 20px;
 }
 
-.VALUE-PROP .rectangle-wrapper {
-  background-color: #7083bb;
-  border-radius: 71px;
-  height: 72px;
-  left: 4px;
-  position: absolute;
-  top: 0;
-  width: 373px;
+.incident-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #333;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.VALUE-PROP .rectangle-2 {
-  background-color: #7083bb;
-  height: 35px;
-  position: relative;
-  top: 37px;
-}
-
-.VALUE-PROP .table-heading {
-  color: #000000;
-  font-family: "CocoSharp Trial", Helvetica;
-  font-size: 27px;
+.incident-table th, .incident-table td {
+  padding: 12px 20px;
+  text-align: left;
+  color: #fff;
+  font-family: Poppins;
+  font-size: 18px;
   font-weight: 700;
-  left: 0;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: center;
-  top: 25px;
-  white-space: nowrap;
-  width: 136px;
+  border-bottom: 1px solid #dddddd00;
+}
+
+.incident-table th {
+  background-color: #0606ac;
+  color: #ffffff;
+}
+
+.incident-table tr:nth-child(even) {
+  background-color: #333;
+}
+
+.incident-table tr:hover {
+  background-color: #666666;
+  cursor: pointer;
+}
+
+.table-record-cell {
+  font-size: 18px;
+  color: #ffffff;
+  padding: 10px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.table-header-cell {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.table-row {
+  cursor: pointer;
 }

@@ -3,6 +3,9 @@ import sys
 from ultralytics import YOLO
 
 def get_models():
+    """
+    Load YOLO models for weapon and bag detection.
+    """
     yolov11n_model_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', 'models', 'weapons_n_bags', 'yolo11n.pt')
 
     custom_weapon_model_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', 'models', 'weapons_n_bags', 'weapon_11m.pt')
