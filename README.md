@@ -81,7 +81,7 @@ Public safety in open spaces has become a growing concern due to:
 
 **Guardian.ai** stands as a scalable, AI-powered surveillance solution built to address modern security challenges in public spaces. Though currently a Minimum Viable Product (MVP), its design is extensible for large-scale deployments with better hardware and resources.
 
-Thank you for your interest in **Project Arkhash**. Together, let's make public spaces safer. 🛡️
+Thank you for your interest in **Guardian AI**. Together, let's make public spaces safer. 🛡️
 ### To start backend:
 
 - cd backend
