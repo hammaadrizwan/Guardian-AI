@@ -3,8 +3,8 @@ from datetime import datetime
 import os
 import csv
 
-AWS_ACCESS_KEY_ID = 'AKIAXHB7CVFK7XWERS2V' 
-AWS_SECRET_ACCESS_KEY = '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' 
+AWS_ACCESS_KEY_ID = 'AWS_ACCESS_KEY_ID' 
+AWS_SECRET_ACCESS_KEY = 'AWS_SECRET_ACCESS_KEY' 
 S3_BUCKET_NAME = 'security-detection-images'
 AWS_REGION = 'ap-south-1'  
 
